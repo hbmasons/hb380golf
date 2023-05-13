@@ -89,7 +89,7 @@
     <div id="paypal-button-container" class="paypal-buttons">
     </div>
     
-    <script src="https://www.paypal.com/sdk/js?client-id=ARKhIbKdL9S9xiHK-RC04vrawh3Durpm68h6qM79O0xkxl5XZaB7UbQ1x3aem14yTylGBf410jBKhdVo"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=ARKhIbKdL9S9xiHK-RC04vrawh3Durpm68h6qM79O0xkxl5XZaB7UbQ1x3aem14yTylGBf410jBKhdVo&commit=true&enable-funding=venmo"></script>
     <script>
         const fundingSources = [
                                 paypal.FUNDING.PAYPAL,
@@ -103,7 +103,8 @@
                                         fundingSource,
                                         style: {
                                             layout: 'vertical',
-                                            shape: 'pill'
+                                            shape: 'pill',
+                                            tagline: 'false'
                                         },
                                         createOrder: function (data, actions) {
                                             const createOrderPayload = {
