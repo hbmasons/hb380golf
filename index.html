@@ -177,11 +177,10 @@
     <p>(Note: Charity Golf Tournament in memo)</p>
     <br><br>
 
-    <script src="https://www.paypal.com/sdk/js?client-id=ARKhIbKdL9S9xiHK-RC04vrawh3Durpm68h6qM79O0xkxl5XZaB7UbQ1x3aem14yTylGBf410jBKhdVo"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AQf16KQZ1h-0DndRryNESxbFLajmCY8Rntyfl5rGXBArA-LUV1rEikA3x9cNJpVhzkAoSszMvfKEbtYb&commit=true"></script>
     <script>
       const fundingSources = [
         paypal.FUNDING.PAYPAL,
-        paypal.FUNDING.VENMO,
         paypal.FUNDING.CARD
       ];
 
@@ -198,7 +197,8 @@
                    fundingSource,
                    style: {
                      layout: 'vertical',
-                     shape: 'pill'
+                     shape: 'pill',
+                     tagline: 'false'
                    },
                    createOrder: function(data, actions) {
                      const createOrderPayload = {
