@@ -143,7 +143,9 @@
       <textarea id="foursome_players" name="foursome_players" rows="4" cols="5"></textarea><br>
 
       <br><br>
-      <a href="./golfpayment.html" target="_blank"><input class="submit-button" type="button" value="Submit"></a>
+      <a href="./golfpayment.html" target="_blank">
+            <input class="submit-button" id="submit-button" type="button" value="Submit">
+          </a>
       <br><br><br><br>
       </form>
     
@@ -160,7 +162,25 @@
     <p>(Note: Charity Golf Tournament in memo)</p>
     <br><br>
   </div>
-  
+  <script>
+        const numTicketsSelect = document.getElementById('num_tickets');
+        const submitButton = document.querySelector('.submit-button');
+
+        function updateTotalAmount() {
+          const numTickets = parseInt(numTicketsSelect.value);
+          const totalAmount = numTickets * 150;  // calculate the total amount
+          submitButton.value = 'Proceed to Payment $' + totalAmount.toFixed(2);  // display the total amount on the button
+        }
+
+        // update the total amount initially and every time the number of tickets changes
+        updateTotalAmount();
+        numTicketsSelect.addEventListener('change', updateTotalAmount);
+
+        submitButton.addEventListener('click', function() {
+          const numTickets = parseInt(numTicketsSelect.value);
+          window.location.href = `./golfpayment.html?numTickets=${numTickets}`; // Redirect to the payment page
+        });
+      </script>
 </body>
 
 </html>
