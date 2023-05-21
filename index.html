@@ -32,18 +32,6 @@
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
       }
 
-      .paypal-buttons {
-        display: none; /* Hide the PayPal buttons by default */
-        flex-direction: column;
-        align-items: center;
-        margin: 20px auto;
-        width: 70%;
-      }
-
-      .paypal-buttons>* {
-        margin-bottom: 10px;
-      }
-
       h1,
       h2 {
         color: #333;
@@ -60,10 +48,6 @@
       @media (min-width: 600px) {
         .transparent-box {
           max-width: 47%;
-        }
-
-        .paypal-buttons {
-          width: 43%;
         }
       }
 
@@ -92,21 +76,22 @@
       textarea {
         width: 65%;
         padding: 8px;
-        border-radius: 4px;
+        border-radius: 10px;
         border: 1px solid #ccc;
       }
 
-      input[type="submit"] {
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        width: 65%;
-      }
+        .submit-button {
+              background-color: #4caf50;
+              color: white;
+              border: none;
+              padding: 12px 24px; /* Adjust the padding for larger button size */
+              border-radius: 4px;
+              cursor: pointer;
+              width: 100%; /* Take up the full width of the container */
+              font-size: 16px; /* Adjust the font size for larger button text */
+            }
 
-      input[type="submit"]:hover {
+      .submit-button:hover {
         background-color: #45a049;
       }
     </style>
@@ -157,13 +142,11 @@
       <label for="foursome_players">Other Players in Foursome:</label>
       <textarea id="foursome_players" name="foursome_players" rows="4" cols="5"></textarea><br>
 
-      <input type="submit" value="Submit">
-    </form>
-
+      <br><br>
+      <a href="./golfpayment.html" target="_blank"><input class="submit-button" type="button" value="Submit"></a>
+      <br><br><br><br>
+      </form>
     
-    <div id="paypal-button-container" class="paypal-buttons">
-      <!-- PayPal buttons will be rendered here -->
-    </div>
 
     <br>
     <p>Or send entry fees with names of foursome to:</p>
@@ -176,50 +159,8 @@
     <p>Huntington Beach Lodge #380</p>
     <p>(Note: Charity Golf Tournament in memo)</p>
     <br><br>
-
-    <script src="https://www.paypal.com/sdk/js?client-id=AQf16KQZ1h-0DndRryNESxbFLajmCY8Rntyfl5rGXBArA-LUV1rEikA3x9cNJpVhzkAoSszMvfKEbtYb&commit=true"></script>
-    <script>
-      const fundingSources = [
-        paypal.FUNDING.PAYPAL,
-        paypal.FUNDING.CARD
-      ];
-
-      document.getElementById('registration-form').addEventListener('submit', function(event) {
-             event.preventDefault(); // Prevent the form from submitting normally this might need to be changed.
-
-             // Show the PayPal buttons after clicking submit
-             const paypalButtonsContainer = document.getElementById('paypal-button-container');
-             paypalButtonsContainer.style.display = 'flex';
-
-             // Render PayPal buttons
-             for (const fundingSource of fundingSources) {
-               paypal.Buttons({
-                   fundingSource,
-                   style: {
-                     layout: 'vertical',
-                     shape: 'pill',
-                     tagline: 'false'
-                   },
-                   createOrder: function(data, actions) {
-                     const createOrderPayload = {
-                       purchase_units: [{
-                         amount: {
-                           value: "150.00",
-                         },
-                       }, ],
-                     };
-
-                     return actions.order.create(createOrderPayload);
-                   },
-                   onApprove: function(data, actions) {
-
-                   },
-                 })
-                 .render("#paypal-button-container");
-             }
-           });
-         </script>
   </div>
+  
 </body>
 
 </html>
