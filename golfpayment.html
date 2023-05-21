@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HB Masonic Lodge BBQ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-image: url("Images/grass.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+      padding: 0;
+      margin: 0;
+      color: #444;
+    }
+
+    .transparent-box {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 80%;
+      border-radius: 20px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0px 6px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    h1,
+    h2 {
+      color: #333;
+    }
+
+    p {
+      font-size: 1.1em;
+    }
+
+    img {
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .transparent-box {
+        max-width: 47%;
+      }
+    }
+
+    /* Custom form styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+      .paypal-buttons {
+              display: flex; /* Hide the PayPal buttons by default */
+              flex-direction: column;
+              align-items: center;
+              margin: 20px auto;
+              width: 70%;
+            }
+      
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 65%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 65%;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="transparent-box">
+    <img src="Images/HB380.png" width="125" alt="HB380 Logo">
+    <h1>Huntington Beach Masonic Lodge</h1>
+    <h2>1st Annual GOLF TOURNAMENT</h2>
+    <br><br>
+    <h3>Payment Information</h3>
+
+    <form id="registration-form" action="/submit_form" method="POST">
+      <div id="paypal-button-container" class="paypal-buttons">
+        <!-- PayPal buttons will be rendered here -->
+      </div>
+    </form>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AQf16KQZ1h-0DndRryNESxbFLajmCY8Rntyfl5rGXBArA-LUV1rEikA3x9cNJpVhzkAoSszMvfKEbtYb&commit=true"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const fundingSources = [
+          paypal.FUNDING.PAYPAL,
+          paypal.FUNDING.CARD
+        ];
+
+        // Show the PayPal buttons after the DOM is loaded
+        const paypalButtonsContainer = document.getElementById('paypal-button-container');
+        paypalButtonsContainer.style.display = 'flex';
+
+        // Render PayPal buttons
+        for (const fundingSource of fundingSources) {
+          paypal.Buttons({
+            fundingSource,
+            style: {
+              layout: 'vertical',
+              shape: 'pill',
+              tagline: 'false',
+              height: 55,
+            },
+            createOrder: function(data, actions) {
+              const createOrderPayload = {
+                purchase_units: [{
+                  amount: {
+                    value: "150.00",
+                  },
+                }, ],
+              };
+              
+
+              return actions.order.create(createOrderPayload);
+            },
+            onApprove: function(data, actions) {
+                          // Handle the approved payment
+                          // Redirect to confirm.html
+                          window.location.href = "golfconfirm.html";
+            },
+          }).render("#paypal-button-container");
+        }
+      });
+    </script>
+  </div>
+</body>
+
+</html>
