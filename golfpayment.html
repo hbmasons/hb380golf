@@ -116,47 +116,58 @@
 
     <script src="https://www.paypal.com/sdk/js?client-id=AQf16KQZ1h-0DndRryNESxbFLajmCY8Rntyfl5rGXBArA-LUV1rEikA3x9cNJpVhzkAoSszMvfKEbtYb&commit=true"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const fundingSources = [
-          paypal.FUNDING.PAYPAL,
-          paypal.FUNDING.CARD
-        ];
+        document.addEventListener("DOMContentLoaded", function() {
+            // Extract numTickets from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            let numTickets = parseInt(urlParams.get('numTickets'));
 
-        // Show the PayPal buttons after the DOM is loaded
-        const paypalButtonsContainer = document.getElementById('paypal-button-container');
-        paypalButtonsContainer.style.display = 'flex';
 
-        // Render PayPal buttons
-        for (const fundingSource of fundingSources) {
-          paypal.Buttons({
-            fundingSource,
-            style: {
-              layout: 'vertical',
-              shape: 'pill',
-              tagline: 'false',
-              height: 55,
-            },
-            createOrder: function(data, actions) {
-              const createOrderPayload = {
-                purchase_units: [{
-                  amount: {
-                    value: "150.00",
-                  },
-                }, ],
-              };
-              
+            // Check if numTickets is a number, if not set a default value
+            if (isNaN(numTickets)) {
+                numTickets = 1;  // default value
+            }
 
-              return actions.order.create(createOrderPayload);
-            },
-            onApprove: function(data, actions) {
-                          // Handle the approved payment
-                          // Redirect to confirm.html
-                          window.location.href = "golfconfirm.html";
-            },
-          }).render("#paypal-button-container");
-        }
-      });
-    </script>
+            const fundingSources = [
+                paypal.FUNDING.PAYPAL,
+                paypal.FUNDING.CARD
+            ];
+
+            // Show the PayPal buttons after the DOM is loaded
+            const paypalButtonsContainer = document.getElementById('paypal-button-container');
+            paypalButtonsContainer.style.display = 'flex';
+
+            // Render PayPal buttons
+            for (const fundingSource of fundingSources) {
+                paypal.Buttons({
+                    fundingSource,
+                    style: {
+                        layout: 'vertical',
+                        shape: 'pill',
+                        tagline: 'false',
+                        height: 55,
+                    },
+                    createOrder: function(data, actions) {
+                        const amount = 150 * numTickets;
+                        const createOrderPayload = {
+                            purchase_units: [{
+                                amount: {
+                                    value: amount.toFixed(2),
+                                },
+                            }],
+                        };
+
+                        return actions.order.create(createOrderPayload);
+                    },
+                    onApprove: function(data, actions) {
+                        // Handle the approved payment
+                        // Redirect to confirm.html
+                        window.location.href = "golfconfirm.html";
+                    },
+                }).render("#paypal-button-container");
+            }
+        });
+
+        </script>
   </div>
 </body>
 
